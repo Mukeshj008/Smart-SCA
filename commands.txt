@@ -1,0 +1,231 @@
+================================================================================
+SBOM CVE SCANNER - COMMAND REFERENCE
+================================================================================
+
+# ============================================================================
+# SETUP (Run once)
+# ============================================================================
+
+# Create virtual environment
+python3 -m venv venv
+
+# Activate virtual environment (macOS/Linux)
+source venv/bin/activate
+
+# Activate virtual environment (Windows)
+venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# ============================================================================
+# BASIC USAGE
+# ============================================================================
+
+# Basic scan with HTML report (uses heuristic analysis by default)
+# Uses included sample-sbom.json for testing
+python sbom_cve_scanner_enhanced.py sample-sbom.json
+
+# Scan with source code for reachability analysis
+python sbom_cve_scanner_enhanced.py your-sbom.json --source /path/to/source
+
+# Specify output file name
+python sbom_cve_scanner_enhanced.py sample-sbom.json -o my_report
+
+# ============================================================================
+# REPORT FORMATS
+# ============================================================================
+
+# HTML report only (default)
+python sbom_cve_scanner_enhanced.py sbom.json -f html -o report
+
+# PDF report only
+python sbom_cve_scanner_enhanced.py sbom.json -f pdf -o report
+
+# Excel report only
+python sbom_cve_scanner_enhanced.py sbom.json -f excel -o report
+
+# All formats (HTML + PDF + Excel)
+python sbom_cve_scanner_enhanced.py sbom.json -f all -o report
+
+# ============================================================================
+# FULL ANALYSIS (Recommended)
+# ============================================================================
+
+# Full analysis with source code and all report formats
+python sbom_cve_scanner_enhanced.py sbom.json --source /path/to/source -f all -o vulnerability_report
+
+# Multiple source directories
+python sbom_cve_scanner_enhanced.py sbom.json --source /path/to/src1 --source /path/to/src2 -f all -o report
+
+# ============================================================================
+# AI PROVIDERS FOR EXPLOIT ANALYSIS
+# ============================================================================
+
+# Heuristic analysis (DEFAULT - no API key needed, fast)
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src --ai heuristic
+
+# Skip exploit analysis entirely
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src --skip-ai
+
+# --- OpenAI (requires API key) ---
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src --ai openai --api-key YOUR_OPENAI_KEY
+
+# OpenAI with specific model
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src --ai openai --api-key YOUR_KEY --model gpt-4o
+
+# OpenAI using environment variable
+export OPENAI_API_KEY="sk-your-key-here"
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src --ai openai
+
+# --- Google Gemini (requires API key) ---
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src --ai gemini --gemini-key YOUR_GEMINI_KEY
+
+# Gemini with specific model
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src --ai gemini --gemini-key YOUR_KEY --model gemini-2.5-flash
+
+# Gemini using environment variable
+export GOOGLE_API_KEY="your-key-here"
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src --ai gemini
+
+# --- Ollama (local LLM - no API key, requires Ollama server) ---
+
+# First, ensure Ollama is running
+ollama serve
+
+# Pull a model (if not already)
+ollama pull llama3.2
+
+# Run with Ollama
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src --ai ollama
+
+# Ollama with specific model
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src --ai ollama --model mistral
+
+# Ollama with custom server URL
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src --ai ollama --ollama-url http://localhost:11434
+
+# ============================================================================
+# EXPLOIT-DB INTELLIGENCE (OPTIONAL - NO API KEY NEEDED)
+# ============================================================================
+
+# Enable Exploit-DB intelligence to search exploit-db.com for public exploits
+# Use --exploit-db flag to enable (disabled by default)
+
+# Basic scan with Exploit-DB intel
+python sbom_cve_scanner_enhanced.py sbom.json --exploit-db
+
+# With source code reachability
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src --exploit-db
+
+# Combined with AI providers
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src --exploit-db --ai openai --api-key KEY
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src --exploit-db --ai gemini --gemini-key KEY
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src --exploit-db --ai ollama
+
+# Without Exploit-DB (faster, heuristic-only)
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src
+
+# ============================================================================
+# TROUBLESHOOTING OPTIONS
+# ============================================================================
+
+# Fix SSL certificate errors (common on macOS)
+python sbom_cve_scanner_enhanced.py sbom.json --no-verify-ssl
+
+# Increase delay between API requests (avoid rate limiting)
+python sbom_cve_scanner_enhanced.py sbom.json --delay 1.0
+
+# Combined troubleshooting
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src --no-verify-ssl --delay 1.0
+
+# ============================================================================
+# HELP AND VERSION
+# ============================================================================
+
+# Show help with all options
+python sbom_cve_scanner_enhanced.py --help
+
+# Show version
+python sbom_cve_scanner_enhanced.py --version
+
+# ============================================================================
+# COMPLETE EXAMPLES
+# ============================================================================
+
+# Example 1: Quick scan (heuristic + exploit intel, HTML only)
+python sbom_cve_scanner_enhanced.py sbom.json -o quick_scan
+
+# Example 2: Full scan with Exploit-DB intel (RECOMMENDED)
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src -f all -o full_report --exploit-db --no-verify-ssl
+
+# Example 3: Production scan with OpenAI + Exploit-DB
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src -f all -o prod_report --ai openai --api-key sk-xxx --exploit-db --no-verify-ssl
+
+# Example 4: Local AI scan with Ollama + Exploit-DB
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src -f all -o local_report --ai ollama --model llama3.2 --exploit-db
+
+# Example 5: Gemini scan + Exploit-DB
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src -f all -o gemini_report --ai gemini --gemini-key YOUR_KEY --exploit-db
+
+# Example 6: Fast scan (heuristic only, no Exploit-DB)
+python sbom_cve_scanner_enhanced.py sbom.json --source ./src -f all -o fast_report --no-verify-ssl
+
+# ============================================================================
+# GENERATING SBOM FILES (for different ecosystems)
+# ============================================================================
+
+# Maven (Java)
+mvn org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom
+# Output: target/bom.json
+
+# Gradle (Java)
+gradle cyclonedxBom
+# Output: build/reports/bom.json
+
+# npm (JavaScript/Node.js)
+npx @cyclonedx/cyclonedx-npm --output-file sbom.json
+
+# Python
+pip install cyclonedx-bom
+cyclonedx-py -o sbom.json
+
+# Go
+cyclonedx-gomod mod -o sbom.json
+
+# .NET
+dotnet CycloneDX /path/to/project.csproj -o sbom.json
+
+# ============================================================================
+# ENVIRONMENT VARIABLES
+# ============================================================================
+
+# Set OpenAI API key
+export OPENAI_API_KEY="sk-your-openai-key"
+
+# Set Google Gemini API key
+export GOOGLE_API_KEY="your-gemini-key"
+
+# ============================================================================
+# NOTES
+# ============================================================================
+
+# 1. Always activate virtual environment before running:
+#    source venv/bin/activate
+
+# 2. Default behavior (no --ai flag) uses heuristic analysis - fast and no API needed
+
+# 3. For SSL errors on macOS, use --no-verify-ssl
+
+# 4. Report files are named: <output>.<format>
+#    Example: -o report -f all creates report.html, report.pdf, report.xlsx
+
+# 5. Supported SBOM formats: CycloneDX JSON (.json) and XML (.xml)
+
+# 6. Supported languages for reachability analysis:
+#    - Java (.java, .kt, .scala)
+#    - Python (.py)
+#    - JavaScript/TypeScript (.js, .ts, .tsx, .jsx)
+#    - Go (.go)
+
+================================================================================
