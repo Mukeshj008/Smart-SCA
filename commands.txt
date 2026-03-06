@@ -1,0 +1,34 @@
+================================================================================
+SMART SCA SCANNER - COMMAND REFERENCE
+================================================================================
+
+# SETUP
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+# BASIC
+python smart_sca_scanner.py sample_sbom_10_vulns.json
+python smart_sca_scanner.py sbom.json --source ./src -f all
+
+# REPORTS (HTML always; add PDF/Excel/JSON with -f)
+python smart_sca_scanner.py sbom.json
+python smart_sca_scanner.py sbom.json -f pdf
+python smart_sca_scanner.py sbom.json -f excel
+python smart_sca_scanner.py sbom.json -f json
+python smart_sca_scanner.py sbom.json -f all
+
+# AI (pick one)
+python smart_sca_scanner.py sbom.json --source ./src --ai ollama
+python smart_sca_scanner.py sbom.json --source ./src --ai gemini --gemini-key KEY
+python smart_sca_scanner.py sbom.json --source ./src --ai openai --api-key KEY
+python smart_sca_scanner.py sbom.json --source ./src --ai claude --claude-key KEY
+
+# OPTIONS
+python smart_sca_scanner.py sbom.json --skip-ai
+python smart_sca_scanner.py sbom.json --exploit-db
+python smart_sca_scanner.py sbom.json --no-verify-ssl
+python smart_sca_scanner.py sbom.json --kb my_kb.json --ai ollama   # custom KB path
+
+# HELP
+python smart_sca_scanner.py --help

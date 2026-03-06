@@ -1,0 +1,66 @@
+{
+  "CVE-2021-45046": [
+    "log4j-core with JndiLookup",
+    "Logger with JndiLookup"
+  ],
+  "CVE-2017-5645": [
+    "log4j-core with JndiLookup",
+    "Logger with JndiLookup",
+    "RepositoryConfig with JndiLookup"
+  ],
+  "CVE-2021-44228": [
+    "log4j-core with JndiLookup",
+    "log4j-core with XmlParser",
+    "log4j-core with ${jndi:lookup}"
+  ],
+  "CVE-2022-0839": [
+    "LiquibaseXMLParser with untrusted input",
+    "LiquibaseXMLSource with untrusted input"
+  ],
+  "CVE-2019-10086": [
+    "BeanUtilsBeanWrapper with BeanUtilsBean",
+    "BeanUtilsBeanWrapper with BeanUtilsBean#copyFor"
+  ],
+  "CVE-2014-0114": [
+    "BeanUtilsBeanWrapper with BeanUtilsBeanWrapper",
+    "BeanUtilsBeanWrapper with BeanUtilsBeanWrapper",
+    "BeanUtilsBeanWrapper with BeanUtilsBeanWrapper"
+  ],
+  "CVE-2025-48734": [
+    "BeanUtilsBeanWrapper with BeanWrapperUtil",
+    "StringUtil with StringUtil"
+  ],
+  "CVE-2024-47554": [
+    "XmlStreamReader with untrusted input",
+    "commons-io with XmlParser"
+  ],
+  "CVE-2021-45105": [
+    "log4j-core with JndiLookup",
+    "StringEncoder with untrusted input"
+  ],
+  "CVE-2018-1272": [
+    "org.springframework:spring-core with JndiLookup",
+    "org.springframework:spring-core with XmlStreamReader"
+  ],
+  "CVE-2018-15756": [
+    "Spring AOP with @AspectJ",
+    "org.springframework.core.env.ConfigProperties with 'spring.config.location'"
+  ],
+  "CVE-2022-25647": [
+    "gson.GsonBuilder with untrusted input",
+    "gson.JsonReader with untrusted input"
+  ],
+  "CVE-2017-7536": [
+    "hibernate-validator BeanValidator with @javax.validation.constraints.NotNull",
+    "hibernate-validator ConstraintValidator with @javax.validation.ConstraintValidator",
+    "hibernate-validator BeanValidator with @javax.validation.constraints.NotBlank"
+  ],
+  "CVE-2023-31418": [
+    "Elasticsearch REST API with /_cluster/health",
+    "Elasticsearch REST API with /_nodes"
+  ],
+  "CVE-2019-7611": [
+    "Elasticsearch REST API with 'GET /_cluster/health' endpoint",
+    "Elasticsearch REST API with 'GET /_nodes' endpoint"
+  ]
+}
